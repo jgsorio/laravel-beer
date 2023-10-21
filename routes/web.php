@@ -1,9 +1,6 @@
 <?php
 
-use App\Http\Controllers\{
-    BeerController,
-    ProfileController
-};
+use App\Http\Controllers\{BeerController, ExportController, ProfileController};
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -32,5 +29,6 @@ require __DIR__.'/auth.php';
 Route::group(['prefix' => 'beers', 'middleware' => ['auth']], function () {
     Route::get('/', [BeerController::class, 'index']);
     Route::get('/export', [BeerController::class, 'export']);
+    Route::get('/reports', [ExportController::class, 'index']);
+    Route::delete('/reports/{export}', [ExportController::class, 'destroy']);
 });
-
