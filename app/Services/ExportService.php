@@ -3,7 +3,10 @@
 namespace App\Services;
 
 use App\Jobs\ExportJob;
+use App\Models\Export;
 use Illuminate\Http\Request;
+use Illuminate\Pagination\LengthAwarePaginator;
+use Illuminate\Support\Facades\Storage;
 
 class ExportService
 {
@@ -16,5 +19,16 @@ class ExportService
         })->toArray();
 
         ExportJob::dispatch($filteredBeers, auth()->user());
+    }
+
+    public function getAll(): LengthAwarePaginator
+    {
+        return Export::query()->paginate(10);
+    }
+
+    public function delete(Export $export): void
+    {
+        Storage::delete($export->file_name);
+        $export->delete();
     }
 }
