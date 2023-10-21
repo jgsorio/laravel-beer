@@ -29,8 +29,8 @@ Route::middleware('auth')->group(function () {
 
 require __DIR__.'/auth.php';
 
-Route::group(['prefix' => 'beers'], function () {
+Route::group(['prefix' => 'beers', 'middleware' => ['auth']], function () {
     Route::get('/', [BeerController::class, 'index']);
     Route::get('/export', [BeerController::class, 'export']);
-})->middleware('auth');
+});
 

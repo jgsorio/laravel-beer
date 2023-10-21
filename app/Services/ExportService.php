@@ -15,6 +15,6 @@ class ExportService
             return collect($beer)->only($columns)->toArray();
         })->toArray();
 
-        ExportJob::dispatch($filteredBeers);
+        ExportJob::dispatch($filteredBeers, auth()->user());
     }
 }
